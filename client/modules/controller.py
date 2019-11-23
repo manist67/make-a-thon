@@ -31,7 +31,7 @@ blink() ## Call the function
 # 만약 사용자의 손이 조도센서를 가지면 true를 보내준다.
 # return True | False
 def isUserOn():
-	pass
+	return False
 
 
 # 카메라의 사진을 가져오는 함수이다.
@@ -44,6 +44,7 @@ def getPicturePath():
 	camera=PiCamera()
 	camera.capture(picturePath)
 	return picturePath
+
 
 # 자판기의 버튼의 led의 불빛을 제어하는 함수이다.
 # params ( list ) btns
@@ -95,9 +96,13 @@ def moveMoter(idx):
 # return length: Integer이며
 # 연결한 버튼의 개수를 리턴해준다.
 def getBtnCount():
+<<<<<<< HEAD
 	pass
 
 
 if __name__ == "__main__":
 	getPicturePath()
 	setBtnLedLight()
+=======
+	return 3
+>>>>>>> 407b8217441f216737c854572589604c2158571d
