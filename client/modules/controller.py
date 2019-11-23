@@ -4,11 +4,11 @@ import time
 
 
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(13 , GPIO.OUT)
-GPIO.setup(16 , GPIO.OUT)
-GPIO.setup(19 , GPIO.OUT)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(19, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
-GPIO.setip(26,GPIO.OUT)
+
 
 # 유저가 앞에 존재하는지 확인하는 함수이다.
 # 조도 센서를 이용하여 가시광선이 센서에 안에 들어오면 false를 보낸다.
@@ -35,25 +35,17 @@ def getPicturePath():
 # btns는 { color: String }들로 이루어진 리스트이다
 # color는 #rrggbb형태로 오며 해당 rgb값을 순서대로 led에 출력한다
 def setBtnLedLight(btns):
-	for idx, val in btns:
-		if val==True and idx==0:
-			GPIO.output(13,True)
-		if val==True and idx==1:
-			GPIO.output(16,True)
-		if val==True and idx==2:
-			GPIO.output(19,True)
-		if val==True and idx==3:
-			GPIO.output(20,True)
-		if val==True and idx==4:
-			GPIO.output(26,True)
-
-
-
-
-
-
-
-
+	for idx, val in enumerate(btns):
+		if idx==0:
+			GPIO.output(13, val)
+		if idx==1:
+			GPIO.output(16, val)
+		if idx==2:
+			GPIO.output(19, val)
+		if idx==3:
+			GPIO.output(20, val)
+		if idx==4:
+			GPIO.output(26, val)
 
 
 # 자판기의 버튼에 함수를 연결하는 함수이다.
@@ -82,7 +74,3 @@ def moveMoter(idx):
 def getBtnCount():
 	return 3
 
-
-if __name__ == "__main__":
-	getPicturePath()
-	setBtnLedLight()

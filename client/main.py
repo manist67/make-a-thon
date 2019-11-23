@@ -1,6 +1,10 @@
 import requests
 import time
+import RPi.GPIO as GPIO
 
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(13, GPIO.OUT)
+GPIO.setup(16, GPIO.OUT)
 DOMAIN = "http://vending.hssoft.kr:3000"
 
 if __name__ == "__main__":
@@ -22,8 +26,8 @@ if __name__ == "__main__":
                 break
 
         # TODO: indicater on
-
-
+        GPIO.output(13,True)
+        GPIO.output(16,True)
         # check the fingerprint input
         photoPath = None
         while not photoPath:
