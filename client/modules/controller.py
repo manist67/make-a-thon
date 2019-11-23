@@ -3,7 +3,6 @@ from picamera import PiCamera
 import time
 
 
-
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(13 , GPIO.OUT)
 GPIO.setup(16 , GPIO.OUT)
@@ -11,21 +10,6 @@ GPIO.setup(19 , GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setip(26,GPIO.OUT)
 
-def blink():
-    print "Starting blinking fever!"
-    iteracion = 0
-    while iteracion < 30: ## Blink for 30'
-        GPIO.output(17, True) ## On 17
-        GPIO.output(27, False) ## Off 27
-        time.sleep(1) ## Wait one second
-        GPIO.output(17, False) ## Off 17
-        GPIO.output(27, True) ## On 27
-        time.sleep(1) ## Wait one second
-        iteracion = iteracion + 2 ## Add 2 second, one for each blink
-    print "I'm done!"
-    GPIO.cleanup() ## Clean the GPIO
-
-blink() ## Call the function
 # 유저가 앞에 존재하는지 확인하는 함수이다.
 # 조도 센서를 이용하여 가시광선이 센서에 안에 들어오면 false를 보낸다.
 # 만약 사용자의 손이 조도센서를 가지면 true를 보내준다.
