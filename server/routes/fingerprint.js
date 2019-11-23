@@ -10,6 +10,12 @@ var upload = multer();
 var pool = require('../modules/database');
 var sql = require('../sql');
 
+router.get("/", function(req, res, next) {
+	setTimeout(()=>{
+		res.send({});
+	}, 5000)
+})
+
 router.post("/", upload.single("file") ,async function(req, res, next) {
 	let connection;
 	try {
