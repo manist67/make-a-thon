@@ -1,5 +1,6 @@
 var express = require("express");
 var multer = require("multer");
+var rs = require("randomstring");
 
 var router = express.Router();
 var upload = multer();
@@ -7,16 +8,64 @@ var upload = multer();
 var pool = require('../modules/database');
 var sql = require('../sql');
 
-router.post("/", upload.single("file") ,function(req, res) {
+router.post("/", upload.single("file") ,async function(req, res, next) {
+	let connection;
+	try {
+		connection = await pool.getConnection(async conn => conn);
+	} catch(e) {
+		next({
+			status: 500,
+			message: "데이터베이스 접속 오류"
+		}); return;
+	}
+	
+	// TODO : create hahs by fingerprint
+	const hash = req.file.originalname;
+	let user;
+	try {
+		const [rows] = await connection.query(sql.selectUserByFingerprinter, [ hash ]);
+		
+		if(rows.length !== 1) {
+			next({
+				status: 400,
+				message: "유저 정보가 없습니다."
+			});
+			return;
+		}
+		user = rows[0];
+	} catch (e) {
+		console.warn(e)
+		next({
+			status: 500,
+			message: "데이터베이스 접속 오류"
+		}); return;
+	}
+
+	const access_token = rs.generate(50);
+	const expire = new Date((new Date().getTime()) + 20);
+
+	try {
+		await connection.query(sql.insertAccessToken, [user.seq, access_token, expire]);
+	} catch(e) {
+		next({
+			status: 500,
+			message: "데이터베이스 접속 오류"
+		}); return;
+	}
+
 	res.send({
-		message: ""
+		message: "성공적으로 작업을 완료했습니다.",
+		data: {
+			access_type: "Bearer",
+			access_token,
+			expire: expire
+		}
 	})
 });
 
 
 router.put("/", upload.single("file"), async function(req, res, next) {
 	let connection;
-
 	try {
 		connection = await pool.getConnection(async conn => conn);
 	} catch(e) {
@@ -53,7 +102,7 @@ router.put("/", upload.single("file"), async function(req, res, next) {
 
 
 	// TODO : create hahs by fingerprint
-	const hash = req.file.buffer.toString();
+	const hash = req.file.originalname;
 
 	try {
 		await connection.query(sql.updateUserWithFingerprint, [hash, user.seq])
