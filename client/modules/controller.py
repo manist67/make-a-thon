@@ -80,13 +80,9 @@ def moveMoter(idx):
 # return length: Integer이며
 # 연결한 버튼의 개수를 리턴해준다.
 def getBtnCount():
-<<<<<<< HEAD
-	pass
+	return 3
 
 
 if __name__ == "__main__":
 	getPicturePath()
 	setBtnLedLight()
-=======
-	return 3
->>>>>>> 407b8217441f216737c854572589604c2158571d
