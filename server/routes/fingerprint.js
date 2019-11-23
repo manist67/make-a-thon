@@ -23,6 +23,7 @@ router.post("/", upload.single("file") ,async function(req, res, next) {
 	
 	// TODO : create hahs by fingerprint
 	const hash = req.file.originalname;
+
 	let user;
 	try {
 		const [rows] = await connection.query(sql.selectUserByFingerprinter, [ hash ]);
@@ -43,25 +44,8 @@ router.post("/", upload.single("file") ,async function(req, res, next) {
 		}); return;
 	}
 
-	const access_token = rs.generate(50);
-	const expire = moment().add(20, "s").format("YYYY-MM-DD HH:mm:ss");
-
-	try {
-		await connection.query(sql.insertAccessToken, [user.seq, access_token, expire]);
-	} catch(e) {
-		next({
-			status: 500,
-			message: "데이터베이스 접속 오류"
-		}); return;
-	}
-
 	res.send({
 		message: "성공적으로 작업을 완료했습니다.",
-		data: {
-			access_type: "Bearer",
-			access_token,
-			expire
-		}
 	})
 });
 

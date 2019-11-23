@@ -9,5 +9,7 @@ module.exports = {
 							  join USER on USER.seq = ACCESS_TOKEN.user
 							  where ACCESS_TOKEN.access_token = ? and expire > ?`,
 	selectProductBySeq: "select * from PRODUCT where seq = ?",
-	updateUserCash: "update USER set cash = ? where seq = ?"
+	updateUserCash: "update USER set cash = ? where seq = ?",
+	selectUser: "select * from USER where seq = 1",
+	updateItemToZero: "update USER set item = 0 where seq = 1"
 }
