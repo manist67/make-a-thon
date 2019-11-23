@@ -7,7 +7,7 @@ module.exports = {
 	insertHistory: "insert into HISTORY(user, product) values (?, ?)",
 	selectUserByAccessToken: `select USER.seq as seq, USER.username, USER.cash from ACCESS_TOKEN left
 							  join USER on USER.seq = ACCESS_TOKEN.user
-							  where ACCESS_TOKEN.access_token = ?`,
+							  where ACCESS_TOKEN.access_token = ? and expire > ?`,
 	selectProductBySeq: "select * from PRODUCT where seq = ?",
 	updateUserCash: "update USER set cash = ? where seq = ?"
 }

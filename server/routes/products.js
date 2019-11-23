@@ -1,6 +1,7 @@
 var express = require("express");
 var pool = require("../modules/database");
 var sql = require('../sql');
+var moment = require("moment");
 
 var router = express.Router()
 
@@ -39,7 +40,8 @@ router.get("/:product", async function(req, res, next) {
 
 	let user;
 	try {
-		const [rows] = await connection.query(sql.selectUserByAccessToken, [accessToken]);
+		const expire = moment().format("YYYY-MM-DD HH:mm:ss");
+		const [rows] = await connection.query(sql.selectUserByAccessToken, [accessToken, expire]);
 
 		if(rows.length != 1) {
 			res.status(400).send({
@@ -49,6 +51,7 @@ router.get("/:product", async function(req, res, next) {
 
 		user = rows[0];
 	} catch(e) {
+		console.log(e)
 		next({
 			status: 500,
 			message: "데이터베이스 접속 오류"

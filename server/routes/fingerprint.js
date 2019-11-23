@@ -2,6 +2,8 @@ var express = require("express");
 var multer = require("multer");
 var rs = require("randomstring");
 
+var moment = require("moment");
+
 var router = express.Router();
 var upload = multer();
 
@@ -42,7 +44,7 @@ router.post("/", upload.single("file") ,async function(req, res, next) {
 	}
 
 	const access_token = rs.generate(50);
-	const expire = new Date((new Date().getTime()) + 20);
+	const expire = moment().add(20, "s").format("YYYY-MM-DD HH:mm:ss");
 
 	try {
 		await connection.query(sql.insertAccessToken, [user.seq, access_token, expire]);
@@ -58,7 +60,7 @@ router.post("/", upload.single("file") ,async function(req, res, next) {
 		data: {
 			access_type: "Bearer",
 			access_token,
-			expire: expire
+			expire
 		}
 	})
 });
