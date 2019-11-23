@@ -23,4 +23,14 @@ router.get('/', async function(req, res, next) {
 	connection.close();
 });
 
+router.post('/', async function(req, res, next) {
+	const connection = await pool.getConnection(async conn => conn);
+	const { idx } = req.body;
+	await connection.query(sql.updateItemToItem, [ idx ]);
+
+	res.send({})
+
+	connection.close();
+});
+
 module.exports = router;

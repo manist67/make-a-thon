@@ -11,5 +11,6 @@ module.exports = {
 	selectProductBySeq: "select * from PRODUCT where seq = ?",
 	updateUserCash: "update USER set cash = ? where seq = ?",
 	selectUser: "select * from USER where seq = 1",
-	updateItemToZero: "update USER set item = 0 where seq = 1"
+	updateItemToZero: "update USER set item = 0 where seq = 1",
+	updateItemToItem: "update USER set item = 0 where seq = ?"
 }
