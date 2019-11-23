@@ -8,7 +8,7 @@ GPIO.setup(13, GPIO.OUT)
 GPIO.setup(16, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
-GPIO.setup(26,GPIO.OUT)
+
 
 # 유저가 앞에 존재하는지 확인하는 함수이다.
 # 조도 센서를 이용하여 가시광선이 센서에 안에 들어오면 false를 보낸다.
@@ -73,8 +73,4 @@ def moveMoter(idx):
 # 연결한 버튼의 개수를 리턴해준다.
 def getBtnCount():
 	return 3
-
-if __name__ == "__main__":
-	#getPicturePath()
-	setBtnLedLight([False, False, False, False, False])
 
