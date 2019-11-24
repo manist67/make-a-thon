@@ -14,10 +14,13 @@ router.get('/', async function(req, res, next) {
 		await connection.query(sql.updateItemToZero);
 
 		res.send({
+			code: 0,
 			id: rows[0].item
 		});
 	} else {
-		res.status(400).send();
+		res.status(200).send({
+			code: -1
+		});
 	}
 
 	connection.close();
